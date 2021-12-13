@@ -5,7 +5,6 @@ class Products extends Connection
 {
     private $message;
     private $categories;
-    private $table;
 
     // fields validation
     function validation_fields_products($name, $price, $photo, $categories)
@@ -29,7 +28,7 @@ class Products extends Connection
         }
 
         if (!empty($photo)) {
-            if ($photo != 'image/jpg' || $photo != 'image/png') {
+            if (!(strpos($photo, 'jpeg')  || strpos($photo, 'jpg') || strpos($photo, 'png'))) {
                 $this->message .= 'La imagen debe ser png o jpg.<br>';
             }
         }
@@ -50,5 +49,23 @@ class Products extends Connection
         $this->categories = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $this->categories;
+    }
+
+    function insert_product($cod_category, $cod_user, $name, $price, $obs = '', $photo = '')
+    {
+
+        $sql = "INSERT INTO `products`(`cod_cat`, `cod_us`, `name_prod`, `Price`, `obs_prod`, `photo_prod`)
+                VALUES (:cod_cat, :cod_us, :name_prod, :price, :obs_prod, :photo)";
+
+        $statement = $this->connect()->prepare($sql);
+        $statement->bindParam(':cod_cat', $cod_category);
+        $statement->bindParam(':cod_us', $cod_user);
+        $statement->bindParam(':name_prod', $name);
+        $statement->bindParam(':price', $price);
+        $statement->bindParam(':obs_prod', $obs);
+        $statement->bindParam(':photo', $photo);
+
+        $insert = $statement->execute();
+        return $insert ? true : false;
     }
 }

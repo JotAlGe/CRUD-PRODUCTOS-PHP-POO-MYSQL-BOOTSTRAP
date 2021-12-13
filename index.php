@@ -11,13 +11,24 @@ $sel = new Products;
 $select = $sel->show_categories();
 
 $message = '';
+$messageOk = '';
 if (isset($_POST['btn-save'])) {
-    $product = new Products;
-    $message = $product->validation_fields_products($_POST['product'], $_POST['price'], $_FILES['img-file']['type'], $_POST['comment']);
+    /* $product = new Products; */
+    $message = $sel->validation_fields_products($_POST['product'], $_POST['price'], $_FILES['img-file']['type'], $_POST['comment']);
 
-    /* if (empty($message)) {
-        
-    } */
+    if (empty($message)) {
+        $insert = $sel->insert_product($_POST['categories'], $_SESSION['id_user'], $_POST['product'], $_POST['price'], $_POST['comment'], $_FILES['img-file']['name']);
+        if ($insert === true) {
+            $messageOk = 'Producto ingresado.';
+
+            // load photo
+            $dir = 'public/imgs/products/';
+            $name = $dir . basename($_FILES['img-file']['name']);
+            $img = move_uploaded_file($_FILES['img-file']['tmp_name'], $name);
+        } else {
+            $message = 'Producto NO ingresado.';
+        }
+    }
 }
 ?>
 <?php require_once 'includes/head.inc.php'; ?>
@@ -25,7 +36,7 @@ if (isset($_POST['btn-save'])) {
 
 </head>
 
-<body class="">
+<body class="bg-dark">
     <br><br><br><br>
     <div class="jumbotron">
         <?php require_once 'includes/nav.inc.php'; ?>
@@ -37,17 +48,17 @@ if (isset($_POST['btn-save'])) {
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">Producto:</label>
-                            <input type="text" class="form-control" name="product" placeholder="Producto" value="<?php echo (!empty($_POST['product'])) ? $_POST['product'] : '' ?>">
+                            <input type="text" class="form-control" name="product" placeholder="Producto" required>
 
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom02">Precio:</label>
-                            <input type="text" class="form-control" name="price" placeholder="Precio" value="<?php echo (!empty($_POST['price'])) ? $_POST['price'] : '' ?>">
+                            <input type="text" class="form-control" name="price" placeholder="Precio" required>
 
                         </div>
                         <div class="col-md-12 mb-3">
                             <label for="validationCustom02">Precio:</label>
-                            <select class="form-select col-md-12" aria-label="Default select example">
+                            <select class="form-select col-md-12" aria-label="Default select example" name="categories">
                                 <option selected>Elige una categoría</option>
                                 <?php
                                 foreach ($select as $row) { ?>
@@ -76,6 +87,10 @@ if (isset($_POST['btn-save'])) {
                             <div class="alert alert-danger col-md-12" role="alert"><?php echo $message; ?></div>
 
                         <?php } ?>
+                        <?php if (!empty($messageOk)) { ?>
+                            <div class="alert alert-success col-md-12" role="alert"><?php echo $messageOk; ?></div>
+                        <?php } ?>
+
                     </div>
 
                     <!-- button submit -->
@@ -85,7 +100,31 @@ if (isset($_POST['btn-save'])) {
 
             </div>
             <div class="col-sm-6">
-
+                <table class="table table-striped table-inverse table-responsive table-success">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Código de producto</th>
+                            <th>Nombre de producto</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Foto del producto</th>
+                            <th>Observaciones</th>
+                            <th>Usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td scope="row"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <?php require_once 'includes/footer.inc.php'; ?>

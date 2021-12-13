@@ -5,6 +5,7 @@ class Products extends Connection
 {
     private $message;
     private $categories;
+    private $products;
 
     // fields validation
     function validation_fields_products($name, $price, $photo, $categories)
@@ -67,5 +68,20 @@ class Products extends Connection
 
         $insert = $statement->execute();
         return $insert ? true : false;
+    }
+
+    // show products
+    function show_products()
+    {
+        $this->products = [];
+        $sql = "SELECT p.cod_prod, p.cod_us, p.name_prod, p.Price, p.obs_prod, p.photo_prod,
+                       c.cod_cat, c.desc_cat 
+                FROM products as p, categories as c 
+                WHERE p.cod_cat = c.cod_cat ";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute();
+        $this->products = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->products;
     }
 }

@@ -10,6 +10,9 @@ require_once 'database/Products.php';
 $sel = new Products;
 $select = $sel->show_categories();
 
+//mostrar productos
+$products = $sel->show_products();
+
 $message = '';
 $messageOk = '';
 if (isset($_POST['btn-save'])) {
@@ -17,14 +20,19 @@ if (isset($_POST['btn-save'])) {
     $message = $sel->validation_fields_products($_POST['product'], $_POST['price'], $_FILES['img-file']['type'], $_POST['comment']);
 
     if (empty($message)) {
-        $insert = $sel->insert_product($_POST['categories'], $_SESSION['id_user'], $_POST['product'], $_POST['price'], $_POST['comment'], $_FILES['img-file']['name']);
+        // load photo
+        $dateTime = new DateTime();
+        $dir = 'public/imgs/products/';
+        $name = $dir . $dateTime->getTimestamp() . '_' . basename($_FILES['img-file']['name']);
+        $img = move_uploaded_file($_FILES['img-file']['tmp_name'], $name);
+
+        // insert products
+        $insert = $sel->insert_product($_POST['categories'], $_SESSION['id_user'], $_POST['product'], $_POST['price'], $_POST['comment'], $name);
+
         if ($insert === true) {
             $messageOk = 'Producto ingresado.';
-
-            // load photo
-            $dir = 'public/imgs/products/';
-            $name = $dir . basename($_FILES['img-file']['name']);
-            $img = move_uploaded_file($_FILES['img-file']['tmp_name'], $name);
+            header('Location: index.php');
+            exit;
         } else {
             $message = 'Producto NO ingresado.';
         }
@@ -37,7 +45,7 @@ if (isset($_POST['btn-save'])) {
 </head>
 
 <body class="bg-dark">
-    <br><br><br><br>
+    <br><br>
     <div class="jumbotron">
         <?php require_once 'includes/nav.inc.php'; ?>
 
@@ -113,16 +121,22 @@ if (isset($_POST['btn-save'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td scope="row"></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td scope="row"></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <?php
+                        foreach ($products as $product) { ?>
+
+                            <tr>
+                                <td scope="row"><?php echo $product['cod_prod'] ?></td>
+                                <td><?php echo $product['name_prod'] ?></td>
+                                <td>$ <?php echo $product['Price'] ?></td>
+                                <td><?php echo $product['desc_cat'] ?></td>
+                                <td> <img src="<?php echo $product['photo_prod'] ?>" class="img-thumbnail" alt="Producto" width="100" height="100" /></td>
+                                <td><?php echo $product['obs_prod'] ?></td>
+                                <td><?php echo $product['cod_us'] ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+
                     </tbody>
                 </table>
             </div>

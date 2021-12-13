@@ -1,4 +1,6 @@
-<h1 class="display-2"><strong>Mi Kiosco</strong></h1>
+<h1 class="display-2"><strong> <a href="http://localhost/my-kiosc" class="text-secondary">Mi Kiosco</a></strong></h1>
+
+
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">
         <img class="img-responsive" src="/my-kiosc/public/imgs/users/<?php echo $_SESSION['photo'] ?>" width="50" height="50" alt="">

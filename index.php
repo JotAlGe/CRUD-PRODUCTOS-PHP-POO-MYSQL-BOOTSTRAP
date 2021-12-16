@@ -17,7 +17,7 @@ $message = '';
 $messageOk = '';
 if (isset($_POST['btn-save'])) {
     /* $product = new Products; */
-    $message = $sel->validation_fields_products($_POST['product'], $_POST['price'], $_FILES['img-file']['type'], $_POST['comment']);
+    $message = $sel->validation_fields_products($_POST['product'], $_POST['price'], $_FILES['img-file']['type'], $_POST['categories']);
 
     if (empty($message)) {
         // load photo
@@ -46,9 +46,9 @@ if (isset($_POST['btn-save'])) {
 
 <body class="bg-dark">
     <br><br>
+
     <div class="jumbotron">
         <?php require_once 'includes/nav.inc.php'; ?>
-
 
         <div class="row border border-success mt-3 p-3">
             <div class="col-sm-6">
@@ -65,7 +65,7 @@ if (isset($_POST['btn-save'])) {
 
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label for="validationCustom02">Precio:</label>
+                            <label for="validationCustom02">Categoría:</label>
                             <select class="form-select col-md-12" aria-label="Default select example" name="categories">
                                 <option selected>Elige una categoría</option>
                                 <?php
@@ -122,8 +122,9 @@ if (isset($_POST['btn-save'])) {
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($products as $product) { ?>
-
+                        foreach ($products as $product) {
+                            $_SESSION['cod_prod'] = $product['cod_prod'];
+                        ?>
                             <tr>
                                 <td scope="row"><?php echo $product['cod_prod'] ?></td>
                                 <td><?php echo $product['name_prod'] ?></td>
@@ -132,6 +133,7 @@ if (isset($_POST['btn-save'])) {
                                 <td> <img src="<?php echo $product['photo_prod'] ?>" class="img-thumbnail" alt="Producto" width="100" height="100" /></td>
                                 <td><?php echo $product['obs_prod'] ?></td>
                                 <td><?php echo $product['cod_us'] ?></td>
+                                <td><a id="" class="btn btn-danger" href="delete_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Eliminar</a></td>
                             </tr>
                         <?php
                         }
@@ -139,6 +141,7 @@ if (isset($_POST['btn-save'])) {
 
                     </tbody>
                 </table>
+
             </div>
         </div>
         <?php require_once 'includes/footer.inc.php'; ?>

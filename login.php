@@ -8,6 +8,8 @@ if (isset($_POST['login'])) {
     $user_logged = $user->data_user($_POST['email'], $_POST['pass']);
 
     if (!empty($user_logged)) {
+        /* ADMIN: juanchismo10@gmail.com  password: 123 */
+        /* USUARIO COMUN melisa@hotmali.com  password: 123 */
         $_SESSION['id_user'] = $user_logged['ID'];
         $_SESSION['id_lev']  = $user_logged['ID_LEV'];
         $_SESSION['name']    = $user_logged['NAME'];

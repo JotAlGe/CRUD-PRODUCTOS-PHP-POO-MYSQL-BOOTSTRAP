@@ -133,7 +133,13 @@ if (isset($_POST['btn-save'])) {
                                 <td> <img src="<?php echo $product['photo_prod'] ?>" class="img-thumbnail" alt="Producto" width="100" height="100" /></td>
                                 <td><?php echo $product['obs_prod'] ?></td>
                                 <td><?php echo $product['cod_us'] ?></td>
-                                <td><a id="" class="btn btn-danger" href="delete_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Eliminar</a></td>
+                                <?php if ($_SESSION['id_user'] == 1) { ?>
+                                    <!-- delete button -->
+                                    <td><a id="" class="btn btn-danger" href="delete_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Eliminar</a></td>
+                                    <!-- update button -->
+                                    <td><a id="" class="btn btn-info" href="update_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Modificar</a></td>
+
+                                <?php } ?>
                             </tr>
                         <?php
                         }

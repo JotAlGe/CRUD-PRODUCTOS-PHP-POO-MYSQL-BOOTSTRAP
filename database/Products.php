@@ -97,4 +97,10 @@ class Products extends Connection
 
         return true;
     }
+
+    // delete img
+    function delete_img($img)
+    {
+        return unlink($img) ? true : false;
+    }
 }

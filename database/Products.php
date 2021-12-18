@@ -7,6 +7,7 @@ class Products extends Connection
     private $categories;
     private $products;
     private $id_product;
+    private $product;
 
     // fields validation
     function validation_fields_products($name, $price, $photo, $categories)
@@ -102,5 +103,38 @@ class Products extends Connection
     function delete_img($img)
     {
         return unlink($img) ? true : false;
+    }
+
+    // show one product
+    function show_form_update($id_product)
+    {
+        $this->product = [];
+        $this->id_product = $id_product;
+
+        $sql = "SELECT `cod_prod`, `cod_cat`, `cod_us`, `name_prod`, `Price`, `obs_prod`, `photo_prod` 
+                FROM `products` 
+                WHERE `cod_prod`= :cod_prod";
+
+        $statement = $this->connect()->prepare($sql);
+        $statement->bindParam(':cod_prod', $this->id_product);
+        $statement->execute();
+        $this->product = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $this->product;
+    }
+
+    function update_product($cod_prod, $name, $price, $obs, $categories)
+    {
+        $this->id_product = $cod_prod;
+        $sql = "UPDATE `products` SET name_prod = :name_prod, Price = :price_prod, obs_prod = :obs_prod, cod_cat = :cod_cat 
+                WHERE cod_prod = :cod_prod";
+        $statement = $this->connect()->prepare($sql);
+        $statement->bindParam(':name_prod', $name);
+        $statement->bindParam(':price_prod', $price);
+        $statement->bindParam(':obs_prod', $obs);
+        $statement->bindParam(':cod_cat', $categories);
+        $statement->bindParam(':cod_prod', $this->id_product);
+        $statement->execute();
+
+        return true;
     }
 }

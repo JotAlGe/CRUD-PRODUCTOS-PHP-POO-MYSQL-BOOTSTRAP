@@ -109,7 +109,7 @@ if (isset($_POST['btn-save'])) {
 
             </div>
             <div class="col-sm-6">
-                <table class="table table-striped table-inverse table-responsive table-success">
+                <table class="table table-striped table-inverse table-responsive table-dark table-bordered table-hover">
                     <thead class="thead-inverse">
                         <tr>
                             <th>Código de producto</th>
@@ -138,7 +138,7 @@ if (isset($_POST['btn-save'])) {
                                     <!-- delete button -->
                                     <td><a id="" class="btn btn-danger" href="delete_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>&IMG=<?php echo $product['photo_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Eliminar</a></td>
                                     <!-- update button -->
-                                    <td><a id="" class="btn btn-info" href="update_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Modificar</a></td>
+                                    <td><a id="" class="btn btn-info" href="update_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>" onclick="if (confirm('¿Desea modificar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Modificar</a></td>
 
                                 <?php } ?>
                             </tr>

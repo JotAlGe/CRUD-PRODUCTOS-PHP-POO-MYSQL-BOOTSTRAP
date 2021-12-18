@@ -9,8 +9,7 @@ require_once 'database/Products.php';
 $product = new Products();
 
 if ($product->delete_product($_GET['ID_PRODUCT'])) {
-    /* $_SESSION['Mensaje'] .= '¡Se ha eliminado el producto seleccionado!';
-    $_SESSION['Estilo'] = 'success'; */
+    #delete image from server
     $product->delete_img($_GET['IMG']);
     // redirecting
     header('Location: index.php');

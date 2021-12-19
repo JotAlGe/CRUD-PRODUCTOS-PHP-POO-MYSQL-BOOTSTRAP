@@ -23,7 +23,12 @@ if (isset($_POST['btn-save'])) {
         // load photo
         $dateTime = new DateTime();
         $dir = 'public/imgs/products/';
-        $name = $dir . $dateTime->getTimestamp() . '_' . basename($_FILES['img-file']['name']);
+        if (!empty($_FILES['img-file']['name'])) {
+            $name = $dir . $dateTime->getTimestamp() . '_' . basename($_FILES['img-file']['name']);
+        } else {
+            $name = NULL;
+        }
+
         $img = move_uploaded_file($_FILES['img-file']['tmp_name'], $name);
 
 
@@ -131,7 +136,7 @@ if (isset($_POST['btn-save'])) {
                                 <td><?php echo $product['name_prod'] ?></td>
                                 <td>$ <?php echo $product['Price'] ?></td>
                                 <td><?php echo $product['desc_cat'] ?></td>
-                                <td> <img src="<?php echo $product['photo_prod'] ?>" class="img-thumbnail" alt="Producto" width="100" height="100" /></td>
+                                <td> <img src="<?php echo $product['photo_prod'] ?>" class="img-thumbnail bg-dark" alt="Sin foto de <?php echo $product['name_prod']; ?>" width="100" height="100" /></td>
                                 <td><?php echo $product['obs_prod'] ?></td>
                                 <td><?php echo $product['cod_us'] ?></td>
                                 <?php if ($_SESSION['id_user'] == 1) { ?>

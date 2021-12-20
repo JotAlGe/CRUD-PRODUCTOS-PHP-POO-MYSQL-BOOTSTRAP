@@ -57,7 +57,7 @@ if (isset($_POST['btn-save'])) {
         <?php require_once 'includes/nav.inc.php'; ?>
 
         <div class="row border border-success mt-3 p-3">
-            <div class="col-sm-5">
+            <div class="col-sm-4">
                 <form class="needs-validation" method="POST" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
@@ -113,7 +113,7 @@ if (isset($_POST['btn-save'])) {
                 </form>
 
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-8">
                 <table class="table table-striped table-inverse table-responsive table-dark table-bordered table-hover">
                     <thead class="thead-inverse">
                         <tr>

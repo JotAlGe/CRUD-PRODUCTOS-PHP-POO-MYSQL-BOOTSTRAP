@@ -57,7 +57,7 @@ if (isset($_POST['btn-save'])) {
         <?php require_once 'includes/nav.inc.php'; ?>
 
         <div class="row border border-success mt-3 p-3">
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 <form class="needs-validation" method="POST" enctype="multipart/form-data">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
@@ -113,7 +113,7 @@ if (isset($_POST['btn-save'])) {
                 </form>
 
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-7">
                 <table class="table table-striped table-inverse table-responsive table-dark table-bordered table-hover">
                     <thead class="thead-inverse">
                         <tr>
@@ -123,7 +123,7 @@ if (isset($_POST['btn-save'])) {
                             <th>Categoría</th>
                             <th>Foto del producto</th>
                             <th>Observaciones</th>
-                            <th>Usuario</th>
+                            <th>Ingresado por:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -138,7 +138,7 @@ if (isset($_POST['btn-save'])) {
                                 <td><?php echo $product['desc_cat'] ?></td>
                                 <td> <img src="<?php echo $product['photo_prod'] ?>" class="img-thumbnail bg-dark" alt="Sin foto de <?php echo $product['name_prod']; ?>" width="100" height="100" /></td>
                                 <td><?php echo $product['obs_prod'] ?></td>
-                                <td><?php echo $product['cod_us'] ?></td>
+                                <td> <img src="public/imgs/users/<?php echo $product['photo_us']; ?>" class="img-thumbnail bg-dark" width="100" height="100" /> <?php echo $product['name_us'] ?></td>
                                 <?php if ($_SESSION['id_user'] == 1) { ?>
                                     <!-- delete button -->
                                     <td><a id="" class="btn btn-danger" href="delete_product.php?ID_PRODUCT=<?php echo $product['cod_prod']; ?>&IMG=<?php echo $product['photo_prod']; ?>" onclick="if (confirm('¿Desea eliminar <?php echo $product['name_prod'] ?> ?')) {return true;} else {return false;}">Eliminar</a></td>

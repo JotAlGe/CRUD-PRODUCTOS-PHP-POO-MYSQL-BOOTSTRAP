@@ -77,9 +77,12 @@ class Products extends Connection
     {
         $this->products = [];
         $sql = "SELECT p.cod_prod, p.cod_us, p.name_prod, p.Price, p.obs_prod, p.photo_prod,
-                       c.cod_cat, c.desc_cat 
-                FROM products as p, categories as c 
-                WHERE p.cod_cat = c.cod_cat ORDER BY p.cod_prod";
+                       c.cod_cat, c.desc_cat, 
+                       u.name_us, u.photo_us
+                FROM products as p, categories as c, users as u 
+                WHERE p.cod_cat = c.cod_cat
+                  AND u.cod_us = p.cod_us
+                GROUP BY p.cod_prod";
         $statement = $this->connect()->prepare($sql);
         $statement->execute();
         $this->products = $statement->fetchAll(PDO::FETCH_ASSOC);

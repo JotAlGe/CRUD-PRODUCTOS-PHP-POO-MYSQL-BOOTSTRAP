@@ -1,0 +1,47 @@
+.bg-1 {
+            background-color: #1abc9c;
+            /* Green */
+            color: #ffffff;
+        }
+
+        .bg-2 {
+            background-color: #474e5d;
+            color: #ffffff;
+        }
+
+        .container-fluid {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+
+        .card-group {
+            display: grid;
+            place-items: center;
+            overflow-y: hidden;
+
+            position: relative;
+        }
+
+        .curtain {
+            min-width: 100%;
+            height: 0px;
+            z-index: -100;
+            transition: all 1s ease;
+            background-color: rgba(26, 188, 156, .9);
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            display: grid;
+            place-items: center;
+        }
+
+        .curtain h4 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .card-group:hover .curtain {
+            z-index: 100;
+            height: 400px;
+        }

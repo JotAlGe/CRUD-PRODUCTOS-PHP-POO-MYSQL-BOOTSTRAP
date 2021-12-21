@@ -24,9 +24,9 @@ $products = $product->product_per_user($_SESSION['id_user']);
     </nav>
 
     <div class="container-fluid bg-1 text-center">
-        <h3>¿Quién soy?</h3>
-        <img src="public/imgs/users/<?php echo $_SESSION['photo']; ?>" alt="Bird" class="img-circle" width="200" height="200">
-        <h3>Soy <?php echo $_SESSION['id_lev'] == 1 ? 'Administrador' : 'normal user'; ?></h3>
+        <img src="public/imgs/users/<?php echo $_SESSION['photo']; ?>" alt="Bird" class="rounded-circle border p-2" width="200" height="200">
+        <h3><?php echo $_SESSION['nick']; ?></h3>
+        <p><?php echo $_SESSION['id_lev'] == 1 ? 'Administrador' : 'Usuario normal'; ?></p>
     </div>
     <div class="container-fluid bg-2 text-center">
         <h3>Los productos agregados por mí</h3>
@@ -36,9 +36,12 @@ $products = $product->product_per_user($_SESSION['id_user']);
             for ($i = 0; $i < count($products); $i++) { ?>
 
                 <div class="card-group bg-dark m-3 mx-auto" style="width:400px">
+                    <div class="curtain">
+                        <h4>$<?php echo $products[$i]['Price']; ?></h4>
+                    </div>
                     <img class="card-img-top" src="<?php echo $products[$i]['photo_prod'] ?>" alt="Sin foto de <?php echo $products[$i]['name_prod']; ?>" alt="Card image" style="width:100%">
                     <div class="card-body">
-                        <h4 class="card-title"><?php $products[$i]['name_prod']; ?></h4>
+                        <h4 class="card-title"><?php echo $products[$i]['name_prod']; ?></h4>
                         <p class="card-text"><?php echo $products[$i]['obs_prod'] ?></p>
 
                         <?php if ($_SESSION['id_user'] == 1) { ?>

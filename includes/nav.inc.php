@@ -2,7 +2,7 @@
 
 
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="user.php?ID_USER=<?php echo $_SESSION['id_user']; ?>">
         <img class="img-responsive" src="/my-kiosc/public/imgs/users/<?php echo $_SESSION['photo'] ?>" width="50" height="50" alt="">
         <?php echo $_SESSION['nick']; ?> <?php echo $_SESSION['id_lev'] == 1 ? '(Administrador)' : ''; ?>
     </a>

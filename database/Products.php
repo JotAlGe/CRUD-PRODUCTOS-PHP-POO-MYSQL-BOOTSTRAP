@@ -140,4 +140,23 @@ class Products extends Connection
 
         return true;
     }
+
+    //product per user
+    function product_per_user($id_user)
+    {
+        $this->products = [];
+        $sql = "SELECT p.cod_prod, p.cod_us, p.name_prod, p.Price, p.obs_prod, p.photo_prod,
+                       c.cod_cat, c.desc_cat, 
+                       u.name_us, u.photo_us
+                FROM products as p, categories as c, users as u 
+                WHERE p.cod_cat = c.cod_cat
+                  AND u.cod_us = p.cod_us
+                  AND p.cod_us = {$id_user}
+                GROUP BY p.cod_prod";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute();
+        $this->products = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->products;
+    }
 }

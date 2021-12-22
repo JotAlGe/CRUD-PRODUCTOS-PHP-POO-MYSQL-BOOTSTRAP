@@ -22,7 +22,7 @@ $products = $product->product_per_user($_SESSION['id_user']);
             <h4>Cerrar Sesión</h4>
         </a>
     </nav>
-
+    <!-- PHOTO - NICKNAME - USER LEVEL -->
     <div class="container-fluid bg-1 text-center">
         <img src="public/imgs/users/<?php echo $_SESSION['photo']; ?>" alt="Bird" class="rounded-circle border p-2" width="200" height="200">
         <h3><?php echo $_SESSION['nick']; ?></h3>

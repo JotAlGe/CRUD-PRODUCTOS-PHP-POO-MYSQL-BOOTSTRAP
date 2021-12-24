@@ -12,7 +12,7 @@ class User extends Connection
     private $photo_user;
     private $message;
 
-    function __construct($cod_user, $cod_level, $name_user, $nick_user, $email_user, $pass_user, $pass_user1, $photo_user)
+    function set_user($cod_user, $cod_level, $name_user, $nick_user, $email_user, $pass_user, $pass_user1, $photo_user)
     {
         $this->cod_user = $cod_user;
         $this->cod_level = $cod_level;
@@ -68,5 +68,23 @@ class User extends Connection
 
 
         return $this->message;
+    }
+
+    // insert user
+    function insert_user()
+    {
+        $sql = "INSERT INTO `users`(`cod_lev`, `name_us`, `nick_us`, `email`, `pass`, `photo_us`) 
+                VALUES (:cod_lev, :name_us, :nick_us, :email, :pass, :photo_us)";
+
+        $statement = $this->connect()->prepare($sql);
+
+        $statement->bindValue(':cod_lev', $this->cod_level);
+        $statement->bindValue(':name_us', $this->name_user);
+        $statement->bindValue(':nick_us', $this->nick_user);
+        $statement->bindValue(':email', $this->email_user);
+        $statement->bindValue(':pass', md5($this->pass_user));
+        $statement->bindValue(':photo_us', empty($this->photo_user) ? null : $this->photo_user);
+
+        return $statement->execute();
     }
 }

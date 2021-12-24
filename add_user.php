@@ -8,9 +8,20 @@ if (empty($_SESSION['name'])) {
 require_once 'database/User.php';
 
 $message = '';
+$messageOk = '';
 if (isset($_POST['btn-add'])) {
-    $user = new User($_SESSION['id_user'], $_SESSION['id_lev'], $_POST['name'], $_POST['nick'], $_POST['email'], $_POST['pass'], $_POST['pass2'], $_FILES['img-user']['name']);
+    $user = new User();
+    $user->set_user($_SESSION['id_user'], 2, $_POST['name'], $_POST['nick'], $_POST['email'], $_POST['pass'], $_POST['pass2'], $_FILES['img-user']['name']);
     $message = $user->validation_fields_user();
+
+    if (empty($message)) {
+        $inserted = $user->insert_user();
+        if ($inserted) {
+            $messageOk = 'Se registró el usuario ' . $_POST['name'] . '.';
+        } else {
+            $message = 'No se pudo registrar el usuario' . $_POST['name'] . '.';
+        }
+    }
 }
 
 ?>
@@ -29,9 +40,9 @@ if (isset($_POST['btn-add'])) {
                     <div class="alert alert-danger col-md-12" role="alert"><?php echo $message; ?></div>
 
                 <?php } ?>
-                <!--  <?php /* if (!empty($messageOk)) */ { ?>
-                    <div class="alert alert-success col-md-12" role="alert"><?php /* echo $messageOk; */ ?></div>
-                <?php } ?> -->
+                <?php if (!empty($messageOk)) { ?>
+                    <div class="alert alert-success col-md-12" role="alert"><?php echo $messageOk; ?></div>
+                <?php } ?>
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label for="name" class="col-md-6 col-form-label">Nombre:</label>

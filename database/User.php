@@ -83,7 +83,7 @@ class User extends Connection
         $statement->bindValue(':nick_us', $this->nick_user);
         $statement->bindValue(':email', $this->email_user);
         $statement->bindValue(':pass', md5($this->pass_user));
-        $statement->bindValue(':photo_us', empty($this->photo_user) ? null : $this->photo_user);
+        $statement->bindValue(':photo_us', $this->photo_user);
 
         return $statement->execute();
     }

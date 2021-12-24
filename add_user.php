@@ -10,14 +10,27 @@ require_once 'database/User.php';
 $message = '';
 $messageOk = '';
 if (isset($_POST['btn-add'])) {
+    // load photo
+    $dateTime = new DateTime();
+
+    // rename image
+    if (!empty($_FILES['img-user']['name'])) {
+        $name = $dateTime->getTimestamp() . '_' . basename($_FILES['img-user']['name']);
+    } else {
+        $name = NULL;
+    }
     $user = new User();
-    $user->set_user($_SESSION['id_user'], 2, $_POST['name'], $_POST['nick'], $_POST['email'], $_POST['pass'], $_POST['pass2'], $_FILES['img-user']['name']);
+    $user->set_user($_SESSION['id_user'], 2, $_POST['name'], $_POST['nick'], $_POST['email'], $_POST['pass'], $_POST['pass2'], $name);
     $message = $user->validation_fields_user();
 
+
     if (empty($message)) {
+
+
         $inserted = $user->insert_user();
-        if ($inserted) {
+        if ($inserted === true) {
             $messageOk = 'Se registró el usuario ' . $_POST['name'] . '.';
+            move_uploaded_file($_FILES['img-user']['tmp_name'], 'public/imgs/users/' . $name);
         } else {
             $message = 'No se pudo registrar el usuario' . $_POST['name'] . '.';
         }
@@ -43,6 +56,7 @@ if (isset($_POST['btn-add'])) {
                 <?php if (!empty($messageOk)) { ?>
                     <div class="alert alert-success col-md-12" role="alert"><?php echo $messageOk; ?></div>
                 <?php } ?>
+
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label for="name" class="col-md-6 col-form-label">Nombre:</label>

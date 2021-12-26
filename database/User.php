@@ -11,6 +11,7 @@ class User extends Connection
     private $pass_user;
     private $photo_user;
     private $message;
+    private $users;
 
     function set_user($cod_user, $cod_level, $name_user, $nick_user, $email_user, $pass_user, $pass_user1, $photo_user)
     {
@@ -86,5 +87,37 @@ class User extends Connection
         $statement->bindValue(':photo_us', $this->photo_user);
 
         return $statement->execute();
+    }
+
+    // get users
+    function get_users()
+    {
+        $this->users = [];
+        $sql = "SELECT u.cod_us, u.cod_lev, u.name_us, u.nick_us, u.email, u.photo_us,
+                       l.cod_lev, l.desc_lev
+                FROM users as u,
+                     levels as l
+                WHERE u.cod_lev = l.cod_lev";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute();
+        $this->users = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $this->users;
+    }
+
+    // delete product
+    function delete_user($id)
+    {
+        $sql = "DELETE FROM users WHERE cod_us = :cod_us";
+        $statement = $this->connect()->prepare($sql);
+        $statement->bindParam(':cod_us', $id);
+        $statement->execute();
+
+        return true;
+    }
+
+    // delete user image
+    function delete_img($img)
+    {
+        return unlink($img) ? true : false;
     }
 }

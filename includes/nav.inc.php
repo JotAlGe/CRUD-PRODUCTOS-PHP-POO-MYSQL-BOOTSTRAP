@@ -9,10 +9,15 @@
     <?php
     if ($_SESSION['id_lev'] == 1) {
     ?>
-        <a class="nav-link" href="add_user.php">Agregar usuarios <span class="sr-only">(current)</span></a>
+        <a class="nav-link text-secondary" href="add_user.php">Agregar usuarios
+            <!-- <span class="sr-only">(current)</span> -->
+        </a>
+        <a class="nav-link text-secondary" href="list_user.php">Listado de usuarios
+            <!-- <span class="sr-only">(current)</span> -->
+        </a>
     <?php
     }
     ?>
 
-    <a class="nav-link text-dark" href="/my-kiosc/logout.php" onclick="if (confirm('¿Desea cerrar sesión ?')) {return true;} else {return false;}">Cerrar Sesión</a>
+    <a class="nav-link text-secondary" href="/my-kiosc/logout.php" onclick="if (confirm('¿Desea cerrar sesión ?')) {return true;} else {return false;}">Cerrar Sesión</a>
 </nav>
